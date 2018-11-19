@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserMapper">
+  <resultMap id="BaseResultMap" type="entity.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="paymentAccountNumber" jdbcType="VARCHAR" property="paymentaccountnumber" />
+    <result column="user_type" jdbcType="TINYINT" property="userType" />
+    <result column="user_type_new" jdbcType="INTEGER" property="userTypeNew" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="password_hash" jdbcType="VARCHAR" property="passwordHash" />
+    <result column="password_pay_hash" jdbcType="VARCHAR" property="passwordPayHash" />
+    <result column="password_reset_token" jdbcType="VARCHAR" property="passwordResetToken" />
+    <result column="real_verify_status" jdbcType="TINYINT" property="realVerifyStatus" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="organization" jdbcType="VARCHAR" property="organization" />
+    <result column="signStatus" jdbcType="INTEGER" property="signstatus" />
+    <result column="card_binding_status" jdbcType="TINYINT" property="cardBindingStatus" />
+    <result column="email_binding_status" jdbcType="TINYINT" property="emailBindingStatus" />
+    <result column="mobile_binding_status" jdbcType="TINYINT" property="mobileBindingStatus" />
+    <result column="auth_key" jdbcType="VARCHAR" property="authKey" />
+    <result column="role" jdbcType="TINYINT" property="role" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="litpic" jdbcType="VARCHAR" property="litpic" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="card_id_base" jdbcType="INTEGER" property="cardIdBase" />
+    <result column="created_at" jdbcType="INTEGER" property="createdAt" />
+    <result column="last_logintime" jdbcType="INTEGER" property="lastLogintime" />
+    <result column="updated_at" jdbcType="INTEGER" property="updatedAt" />
+    <result column="created_ip" jdbcType="VARCHAR" property="createdIp" />
+    <result column="invite_userid" jdbcType="VARCHAR" property="inviteUserid" />
+    <result column="real_verify_time" jdbcType="INTEGER" property="realVerifyTime" />
+    <result column="store_status" jdbcType="INTEGER" property="storeStatus" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+    <result column="refree_status" jdbcType="INTEGER" property="refreeStatus" />
+    <result column="refree_id" jdbcType="INTEGER" property="refreeId" />
+    <result column="accessToken" jdbcType="VARCHAR" property="accesstoken" />
+    <result column="appSource" jdbcType="VARCHAR" property="appsource" />
+    <result column="experience_cash_usable" jdbcType="DECIMAL" property="experienceCashUsable" />
+    <result column="experience_cash_used" jdbcType="DECIMAL" property="experienceCashUsed" />
+    <result column="trust_trxId" jdbcType="VARCHAR" property="trustTrxid" />
+    <result column="trust_usr_custId" jdbcType="VARCHAR" property="trustUsrCustid" />
+    <result column="audit_stat" jdbcType="VARCHAR" property="auditStat" />
+    <result column="audit_desc" jdbcType="VARCHAR" property="auditDesc" />
+    <result column="effect_time" jdbcType="INTEGER" property="effectTime" />
+    <result column="stampPath" jdbcType="VARCHAR" property="stamppath" />
+    <result column="recommender" jdbcType="VARCHAR" property="recommender" />
+    <result column="approved_at" jdbcType="INTEGER" property="approvedAt" />
+    <result column="approvedStatus" jdbcType="INTEGER" property="approvedstatus" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.User">
+    insert into tb_user (id, paymentAccountNumber, user_type, 
+      user_type_new, username, mobile, 
+      password_hash, password_pay_hash, password_reset_token, 
+      real_verify_status, realname, id_card, 
+      organization, signStatus, card_binding_status, 
+      email_binding_status, mobile_binding_status, 
+      auth_key, role, status, 
+      email, sex, litpic, 
+      birthday, card_id_base, created_at, 
+      last_logintime, updated_at, created_ip, 
+      invite_userid, real_verify_time, store_status, 
+      store_id, refree_status, refree_id, 
+      accessToken, appSource, experience_cash_usable, 
+      experience_cash_used, trust_trxId, trust_usr_custId, 
+      audit_stat, audit_desc, effect_time, 
+      stampPath, recommender, approved_at, 
+      approvedStatus)
+    values (#{id,jdbcType=INTEGER}, #{paymentaccountnumber,jdbcType=VARCHAR}, #{userType,jdbcType=TINYINT}, 
+      #{userTypeNew,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{passwordHash,jdbcType=VARCHAR}, #{passwordPayHash,jdbcType=VARCHAR}, #{passwordResetToken,jdbcType=VARCHAR}, 
+      #{realVerifyStatus,jdbcType=TINYINT}, #{realname,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
+      #{organization,jdbcType=VARCHAR}, #{signstatus,jdbcType=INTEGER}, #{cardBindingStatus,jdbcType=TINYINT}, 
+      #{emailBindingStatus,jdbcType=TINYINT}, #{mobileBindingStatus,jdbcType=TINYINT}, 
+      #{authKey,jdbcType=VARCHAR}, #{role,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, 
+      #{email,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, #{litpic,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{cardIdBase,jdbcType=INTEGER}, #{createdAt,jdbcType=INTEGER}, 
+      #{lastLogintime,jdbcType=INTEGER}, #{updatedAt,jdbcType=INTEGER}, #{createdIp,jdbcType=VARCHAR}, 
+      #{inviteUserid,jdbcType=VARCHAR}, #{realVerifyTime,jdbcType=INTEGER}, #{storeStatus,jdbcType=INTEGER}, 
+      #{storeId,jdbcType=INTEGER}, #{refreeStatus,jdbcType=INTEGER}, #{refreeId,jdbcType=INTEGER}, 
+      #{accesstoken,jdbcType=VARCHAR}, #{appsource,jdbcType=VARCHAR}, #{experienceCashUsable,jdbcType=DECIMAL}, 
+      #{experienceCashUsed,jdbcType=DECIMAL}, #{trustTrxid,jdbcType=VARCHAR}, #{trustUsrCustid,jdbcType=VARCHAR}, 
+      #{auditStat,jdbcType=VARCHAR}, #{auditDesc,jdbcType=VARCHAR}, #{effectTime,jdbcType=INTEGER}, 
+      #{stamppath,jdbcType=VARCHAR}, #{recommender,jdbcType=VARCHAR}, #{approvedAt,jdbcType=INTEGER}, 
+      #{approvedstatus,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.User">
+    update tb_user
+    set paymentAccountNumber = #{paymentaccountnumber,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=TINYINT},
+      user_type_new = #{userTypeNew,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      password_hash = #{passwordHash,jdbcType=VARCHAR},
+      password_pay_hash = #{passwordPayHash,jdbcType=VARCHAR},
+      password_reset_token = #{passwordResetToken,jdbcType=VARCHAR},
+      real_verify_status = #{realVerifyStatus,jdbcType=TINYINT},
+      realname = #{realname,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      organization = #{organization,jdbcType=VARCHAR},
+      signStatus = #{signstatus,jdbcType=INTEGER},
+      card_binding_status = #{cardBindingStatus,jdbcType=TINYINT},
+      email_binding_status = #{emailBindingStatus,jdbcType=TINYINT},
+      mobile_binding_status = #{mobileBindingStatus,jdbcType=TINYINT},
+      auth_key = #{authKey,jdbcType=VARCHAR},
+      role = #{role,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      email = #{email,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      litpic = #{litpic,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      card_id_base = #{cardIdBase,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=INTEGER},
+      last_logintime = #{lastLogintime,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=INTEGER},
+      created_ip = #{createdIp,jdbcType=VARCHAR},
+      invite_userid = #{inviteUserid,jdbcType=VARCHAR},
+      real_verify_time = #{realVerifyTime,jdbcType=INTEGER},
+      store_status = #{storeStatus,jdbcType=INTEGER},
+      store_id = #{storeId,jdbcType=INTEGER},
+      refree_status = #{refreeStatus,jdbcType=INTEGER},
+      refree_id = #{refreeId,jdbcType=INTEGER},
+      accessToken = #{accesstoken,jdbcType=VARCHAR},
+      appSource = #{appsource,jdbcType=VARCHAR},
+      experience_cash_usable = #{experienceCashUsable,jdbcType=DECIMAL},
+      experience_cash_used = #{experienceCashUsed,jdbcType=DECIMAL},
+      trust_trxId = #{trustTrxid,jdbcType=VARCHAR},
+      trust_usr_custId = #{trustUsrCustid,jdbcType=VARCHAR},
+      audit_stat = #{auditStat,jdbcType=VARCHAR},
+      audit_desc = #{auditDesc,jdbcType=VARCHAR},
+      effect_time = #{effectTime,jdbcType=INTEGER},
+      stampPath = #{stamppath,jdbcType=VARCHAR},
+      recommender = #{recommender,jdbcType=VARCHAR},
+      approved_at = #{approvedAt,jdbcType=INTEGER},
+      approvedStatus = #{approvedstatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, paymentAccountNumber, user_type, user_type_new, username, mobile, password_hash, 
+    password_pay_hash, password_reset_token, real_verify_status, realname, id_card, organization, 
+    signStatus, card_binding_status, email_binding_status, mobile_binding_status, auth_key, 
+    role, status, email, sex, litpic, birthday, card_id_base, created_at, last_logintime, 
+    updated_at, created_ip, invite_userid, real_verify_time, store_status, store_id, 
+    refree_status, refree_id, accessToken, appSource, experience_cash_usable, experience_cash_used, 
+    trust_trxId, trust_usr_custId, audit_stat, audit_desc, effect_time, stampPath, recommender, 
+    approved_at, approvedStatus
+    from tb_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, paymentAccountNumber, user_type, user_type_new, username, mobile, password_hash, 
+    password_pay_hash, password_reset_token, real_verify_status, realname, id_card, organization, 
+    signStatus, card_binding_status, email_binding_status, mobile_binding_status, auth_key, 
+    role, status, email, sex, litpic, birthday, card_id_base, created_at, last_logintime, 
+    updated_at, created_ip, invite_userid, real_verify_time, store_status, store_id, 
+    refree_status, refree_id, accessToken, appSource, experience_cash_usable, experience_cash_used, 
+    trust_trxId, trust_usr_custId, audit_stat, audit_desc, effect_time, stampPath, recommender, 
+    approved_at, approvedStatus
+    from tb_user
+  </select>
+</mapper>

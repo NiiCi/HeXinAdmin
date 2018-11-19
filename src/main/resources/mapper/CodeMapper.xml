@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.CodeMapper">
+  <resultMap id="BaseResultMap" type="entity.Code">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="time" jdbcType="INTEGER" property="time" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_code
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.Code">
+    insert into tb_code (id, mobile, code, 
+      time)
+    values (#{id,jdbcType=INTEGER}, #{mobile,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{time,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.Code">
+    update tb_code
+    set mobile = #{mobile,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
+      time = #{time,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, mobile, code, time
+    from tb_code
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, mobile, code, time
+    from tb_code
+  </select>
+</mapper>

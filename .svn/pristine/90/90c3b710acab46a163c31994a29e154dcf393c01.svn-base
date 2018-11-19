@@ -1,0 +1,18 @@
+package service.app;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import dao.BorrowWishMapper;
+import entity.BorrowWish;
+@Service
+public class BorrowWishApiBiz {
+   @Autowired
+   BorrowWishMapper borrowWishMapper;
+   /**
+    * 理财产品详情展示(api)
+    */
+  public BorrowWish selectAllApi(int id){
+	 return borrowWishMapper.selectAllApi(id);
+  }
+}

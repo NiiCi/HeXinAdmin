@@ -1,0 +1,19 @@
+/*package service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import dao.AdminUserMapper;
+import entity.AdminUser;
+
+@Service
+public class AdminUserService {
+	@Autowired
+	AdminUserMapper adminUserMapper;
+	
+	//管理员登录
+	public AdminUser loginCheck(String username,String passwordHash){
+		return adminUserMapper.loginCheck(username, passwordHash);
+	}
+}
+*/

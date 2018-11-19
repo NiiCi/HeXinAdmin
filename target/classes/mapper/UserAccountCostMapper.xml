@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserAccountCostMapper">
+  <resultMap id="BaseResultMap" type="entity.UserAccountCost">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="before_lastday_cost" jdbcType="DECIMAL" property="beforeLastdayCost" />
+    <result column="lastday_cost_log" jdbcType="DECIMAL" property="lastdayCostLog" />
+    <result column="update_at" jdbcType="INTEGER" property="updateAt" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user_account_cost
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.UserAccountCost">
+    insert into tb_user_account_cost (id, user_id, before_lastday_cost, 
+      lastday_cost_log, update_at)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{beforeLastdayCost,jdbcType=DECIMAL}, 
+      #{lastdayCostLog,jdbcType=DECIMAL}, #{updateAt,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.UserAccountCost">
+    update tb_user_account_cost
+    set user_id = #{userId,jdbcType=INTEGER},
+      before_lastday_cost = #{beforeLastdayCost,jdbcType=DECIMAL},
+      lastday_cost_log = #{lastdayCostLog,jdbcType=DECIMAL},
+      update_at = #{updateAt,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, before_lastday_cost, lastday_cost_log, update_at
+    from tb_user_account_cost
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, before_lastday_cost, lastday_cost_log, update_at
+    from tb_user_account_cost
+  </select>
+  
+  <!-- 查询用户资金信息 -->
+  <select id="queryByUserId"  resultMap="BaseResultMap">
+		select * from tb_user_account_cost where (lastday_cost_log+before_lastday_cost)>=0 and  #{update_at} > update_at 
+		<if test="user_id != null"> and user_id = #{userId}</if>
+  </select>
+  
+  <!-- 修改用户昨日资金流水 -->
+  <update id="updateCost">
+  	update tb_user_account_cost 
+  	set lastday_cost_log = #{lastday_cost_log}
+  	where user_id = #{user_id} and #{update_at} > update_at
+  </update>
+  <!-- 修改用户临时成本信息 -->
+  <update id="updateUserCost">
+  	update tb_user_account_cost
+  	set update_at = #{updateAt},
+  	before_lastday_cost=before_lastday_cost + lastday_cost_log+#{money},
+  	lastday_cost_log=0
+  	where user_id = #{userId}
+  </update>
+</mapper>

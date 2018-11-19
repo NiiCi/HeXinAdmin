@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+  <context id="MySqlTables" targetRuntime="MyBatis3Simple">
+    <!-- 删除注释 -->
+    <commentGenerator>
+    	<property name="suppressAllComments" value="true"/>
+    </commentGenerator>
+    <!-- 配置数据库 -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://10.10.10.75:3306/yongjianchen?useUnicode=true&amp;characterEncoding=utf-8"
+        userId="root"
+        password="root">
+    </jdbcConnection>
+    <!-- 将整型设置为Integer, 默认为false -->
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+	<!-- 配置实体类 -->
+    <javaModelGenerator targetPackage="entity" targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+    
+	<!-- 配置SQL映射 xml文件 -->
+    <sqlMapGenerator targetPackage="mapper"  targetProject=".\src\main\resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+	<!-- Dao接口 -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="dao" targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+    <table tableName="tb_admin_log" domainObjectName="AdminLog" >
+ <!--      <property name="useActualColumnNames" value="true"/>
+      <generatedKey column="ID" sqlStatement="MySql" identity="true" />
+      <columnOverride column="DATE_FIELD" property="startDate" />
+      <ignoreColumn column="FRED" />
+      <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> -->
+    </table>
+    <table tableName="tb_admin_menu" domainObjectName="AdminMenu"></table>
+    <table tableName="tb_admin_user" domainObjectName="AdminUser"></table>
+    <table tableName="tb_bank" domainObjectName="Bank"></table>
+    <table tableName="tb_borrow_wish" domainObjectName="BorrowWish"></table>
+    <table tableName="tb_borrow_wish_op_detail" domainObjectName="BorrowWishOpDetail"></table>
+    <table tableName="tb_code" domainObjectName="Code"></table>
+    <table tableName="tb_setting" domainObjectName="Setting"></table>
+    <table tableName="tb_user" domainObjectName="User"></table>
+    <table tableName="tb_user_account" domainObjectName="UserAccount"></table>
+    <table tableName="tb_user_account_cost" domainObjectName="UserAccountCost"></table>
+    <table tableName="tb_user_account_log" domainObjectName="UserAccountLog"></table>
+    <table tableName="tb_user_appnews" domainObjectName="UserAppnews"></table>
+    <table tableName="tb_user_capitalflow" domainObjectName="UserCapitalFlow"></table>
+    <table tableName="tb_user_captcha" domainObjectName="UserCaptcha"></table>
+    <table tableName="tb_user_employee" domainObjectName="UserEmployee"></table>
+    <table tableName="tb_user_laborage" domainObjectName="UserLaborage"></table>
+    <table tableName="tb_user_withdraw" domainObjectName="UserWithdraw"></table>
+    <table tableName="user_profits_detail" domainObjectName="UserProfitsDetail"></table>
+  </context>
+</generatorConfiguration>

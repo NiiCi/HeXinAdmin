@@ -1,0 +1,40 @@
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import dao.UserAccountLogMapper;
+import entity.UserAccountLog;
+
+@Service
+public class UserAccountLogService {
+	@Autowired
+	UserAccountLogMapper userAccountLogMapper;
+	
+	//有效投资人数
+    public int getPeopleCount(){
+    	return userAccountLogMapper.getPeopleCount();
+    }
+    
+    //获取昨日活期产品资金变动用户信息
+    public List<UserAccountLog> getMoneyChangeUserInfo(long nowTime){
+    	return userAccountLogMapper.getMoneyChangeUserInfo(nowTime);
+    }
+    
+    //获取永利宝用户昨日的 申购或者赎回的操作金额
+    public double getMoneyChange(Map<String, Object> map){
+    	return userAccountLogMapper.getMoneyChange(map);
+    }
+    //查询用户余额转活/定期存款记录
+    public List<UserAccountLog> getUserMoneyInProductLog(int userId){
+    	return userAccountLogMapper.getUserMoneyInProductLog(userId);
+    }
+    //查询用户活期存款转出到余额记录
+    public List<UserAccountLog> getUserMoneyOutProductLog(int userId){
+    	return userAccountLogMapper.getUserMoneyOutProductLog(userId);
+    }
+    
+}

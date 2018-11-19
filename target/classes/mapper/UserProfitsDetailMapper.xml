@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserProfitsDetailMapper">
+  <resultMap id="BaseResultMap" type="entity.UserProfitsDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="profits" jdbcType="DECIMAL" property="profits" />
+    <result column="profit_day" jdbcType="INTEGER" property="profitDay" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="product_type" jdbcType="INTEGER" property="productType" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <collection property="user" javaType="entity.User">
+    	<result property="mobile" column="mobile"/>
+    	<result property="realname" column="realname"/>
+    	<result property="idCard" column="id_card"/>
+    </collection>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_profits_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.UserProfitsDetail">
+    insert into user_profits_detail (id, user_id, profits, 
+      profit_day, create_time, product_type, 
+      product_name, status, type
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{profits,jdbcType=DECIMAL}, 
+      #{profitDay,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, #{productType,jdbcType=INTEGER}, 
+      #{productName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.UserProfitsDetail">
+    update user_profits_detail
+    set user_id = #{userId,jdbcType=INTEGER},
+      profits = #{profits,jdbcType=DECIMAL},
+      profit_day = #{profitDay,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=INTEGER},
+      product_type = #{productType,jdbcType=INTEGER},
+      product_name = #{productName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, profits, profit_day, create_time, product_type, product_name, 
+    status, type
+    from user_profits_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 动态SQL 查询收益明细 -->
+  <select id="selectAll" resultMap="BaseResultMap" flushCache="false">
+  	select a.id,b.mobile,b.realname,b.id_card,a.profits,a.product_name,a.profit_Day,a.status 
+	from user_profits_detail a , tb_user b
+   	<where>
+   		<if test="mobile != null and mobile != '' ">and b.mobile = #{mobile}</if>
+   		<if test="realname != null and realname != '' ">and b.realname = #{realname}</if>
+   		<if test="idCard != null and idCard != '' ">and b.id_card = #{idCard}</if>
+   		<if test="1==1">
+   			and b.id = a.user_id
+   			and a.profits > 0
+   		</if>
+   	</where>
+   	order by a.id desc
+  </select>
+  
+  <select id="queryProfitByYongliBao" resultMap="BaseResultMap">
+  	select * from user_profits_detail where user_id = #{userId}
+  </select>
+  
+  <!-- 查询用户昨日永利宝收益 -->
+  <select id="queryProfitByLastDay" resultType="object">
+ 	select profits from user_profits_detail 
+ 	where profit_day
+	between #{time}-86400 and #{time} and
+	user_id=#{userId}  and product_name='永利宝'
+  </select>
+  <!-- 添加收益明细  -->
+  <insert id="addProfit">
+  	insert into user_profits_detail
+  	(user_id,profits,profit_day,create_time,product_type,product_name,status,type )
+  	values (#{userId},#{profits},#{profitDay},#{createTime},#{productType},#{productName},#{status},#{type})
+  </insert>
+  
+</mapper>

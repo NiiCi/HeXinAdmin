@@ -1,0 +1,54 @@
+package service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import dao.UserAccountCostMapper;
+import dao.UserAccountLogMapper;
+import entity.UserAccountCost;
+import util.DateUtils;
+
+@Service
+public class UserAccountCostService {
+	@Autowired
+	UserAccountCostMapper userAccountCostMapper;
+	@Autowired
+	UserAccountLogMapper userAccountLogMapper;
+	//修改用户昨日资金流水
+	public int updateCost(int userid){
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("wishName", "永利宝");
+		map.put("userId", userid);
+		map.put("type", 31);
+		map.put("time", DateUtils.getTodayTime()-86400);
+		//查询用户昨日申购的金额
+		double buyMoney = userAccountLogMapper.getMoneyChange(map);
+		
+		map.put("type", 57);
+		map.put("time", DateUtils.getTodayTime());
+		//查询用户昨日赎回的金额
+		double returnMoney = userAccountLogMapper.getMoneyChange(map);
+		//两者差 为昨日用户的资金流水
+		double lastday_cost = buyMoney - returnMoney;
+		//更新资金变动情况
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("userId", userid);
+		params.put("lastday_cost_log", lastday_cost);
+		params.put("time", DateUtils.getTodayTime());
+		return userAccountCostMapper.updateCost(params);
+	}
+	
+	//查询用户资金信息
+    public List<UserAccountCost> queryByUserId (Map<String, Object> map){
+    	return userAccountCostMapper.queryByUserId(map); 
+    }
+    //修改用户临时成本表
+    public int updateUserCost(Map<String, Object> map){
+    	return userAccountCostMapper.updateUserCost(map);
+    }
+    
+}

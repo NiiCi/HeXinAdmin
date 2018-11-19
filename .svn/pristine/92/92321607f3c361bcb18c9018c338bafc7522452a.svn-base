@@ -1,0 +1,53 @@
+package service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import dao.BorrowWishMapper;
+
+@Service
+public class BorrowWishService {
+	@Autowired
+	BorrowWishMapper borrowWishMapper;
+	@Autowired
+	UserAccountCostService userAccountCostService;
+	//活期累计投资总额
+    public double getYongliAll(){
+    	return borrowWishMapper.getYongliAll();
+    }
+    
+    //定期累计投资总额
+    public double getSumMoneyByProduct(){
+    	return borrowWishMapper.getSumMoneyByProduct();
+    }
+    
+    //活期累计收益
+    public double getYongliProfit(){
+    	return borrowWishMapper.getYongliProfit();
+    }
+    
+    //定期累计收益
+    public double getSumProductProfit(){
+    	return borrowWishMapper.getSumProductProfit();
+    }
+    
+    //永利宝当前规模
+    public double getYonglibao(){
+    	return borrowWishMapper.getYonglibao();
+    }
+    
+    //定期当前规模
+    public double getWishAlreadyMoney(){
+    	return borrowWishMapper.getWishAlreadyMoney();
+    }
+    
+    //活期产品年利率
+    public double getWishApr(int wishId){
+    	return borrowWishMapper.getWishApr(wishId);
+    }
+    //修改永利宝总收益,并更新用户临时成本信息表
+    public int updateYonglibaoProfit(double money){
+    	return borrowWishMapper.updateYonglibaoProfit(money); 
+    			
+    }
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.BorrowWishOpDetailMapper">
+  <resultMap id="BaseResultMap" type="entity.BorrowWishOpDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="wish_name" jdbcType="VARCHAR" property="wishName" />
+    <result column="wish_type" jdbcType="INTEGER" property="wishType" />
+    <result column="wish_apr" jdbcType="DECIMAL" property="wishApr" />
+    <result column="wish_time" jdbcType="INTEGER" property="wishTime" />
+    <result column="wish_already_money" jdbcType="INTEGER" property="wishAlreadyMoney" />
+    <result column="op_type" jdbcType="INTEGER" property="opType" />
+    <result column="op_time" jdbcType="INTEGER" property="opTime" />
+    <result column="op_admin" jdbcType="VARCHAR" property="opAdmin" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_borrow_wish_op_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.BorrowWishOpDetail">
+    insert into tb_borrow_wish_op_detail (id, wish_name, wish_type, 
+      wish_apr, wish_time, wish_already_money, 
+      op_type, op_time, op_admin
+      )
+    values (#{id,jdbcType=INTEGER}, #{wishName,jdbcType=VARCHAR}, #{wishType,jdbcType=INTEGER}, 
+      #{wishApr,jdbcType=DECIMAL}, #{wishTime,jdbcType=INTEGER}, #{wishAlreadyMoney,jdbcType=INTEGER}, 
+      #{opType,jdbcType=INTEGER}, #{opTime,jdbcType=INTEGER}, #{opAdmin,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.BorrowWishOpDetail">
+    update tb_borrow_wish_op_detail
+    set wish_name = #{wishName,jdbcType=VARCHAR},
+      wish_type = #{wishType,jdbcType=INTEGER},
+      wish_apr = #{wishApr,jdbcType=DECIMAL},
+      wish_time = #{wishTime,jdbcType=INTEGER},
+      wish_already_money = #{wishAlreadyMoney,jdbcType=INTEGER},
+      op_type = #{opType,jdbcType=INTEGER},
+      op_time = #{opTime,jdbcType=INTEGER},
+      op_admin = #{opAdmin,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, wish_name, wish_type, wish_apr, wish_time, wish_already_money, op_type, 
+    op_time, op_admin
+    from tb_borrow_wish_op_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, wish_name, wish_type, wish_apr, wish_time, wish_already_money, op_type, 
+    op_time, op_admin
+    from tb_borrow_wish_op_detail
+  </select>
+</mapper>

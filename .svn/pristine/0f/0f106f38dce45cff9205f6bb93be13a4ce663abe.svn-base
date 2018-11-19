@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserEmployeeMapper">
+  <resultMap id="BaseResultMap" type="entity.UserEmployee">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="submit_time" jdbcType="VARCHAR" property="submitTime" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="bank" jdbcType="INTEGER" property="bank" />
+    <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="province_city_code" jdbcType="INTEGER" property="provinceCityCode" />
+    <result column="parent_code" jdbcType="INTEGER" property="parentCode" />
+    <result column="reserve_mobile" jdbcType="VARCHAR" property="reserveMobile" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user_employee
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.UserEmployee">
+    insert into tb_user_employee (user_id, real_name, id_card, 
+      mobile, submit_time, operator, 
+      status, bank, bank_card, 
+      type, province_city_code, parent_code, 
+      reserve_mobile)
+    values (#{userId,jdbcType=INTEGER}, #{realName,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{submitTime,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{bank,jdbcType=INTEGER}, #{bankCard,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{provinceCityCode,jdbcType=INTEGER}, #{parentCode,jdbcType=INTEGER}, 
+      #{reserveMobile,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.UserEmployee">
+    update tb_user_employee
+    set real_name = #{realName,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      submit_time = #{submitTime,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      bank = #{bank,jdbcType=INTEGER},
+      bank_card = #{bankCard,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      province_city_code = #{provinceCityCode,jdbcType=INTEGER},
+      parent_code = #{parentCode,jdbcType=INTEGER},
+      reserve_mobile = #{reserveMobile,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select user_id, real_name, id_card, mobile, submit_time, operator, status, bank, 
+    bank_card, type, province_city_code, parent_code, reserve_mobile
+    from tb_user_employee
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select user_id, real_name, id_card, mobile, submit_time, operator, status, bank, 
+    bank_card, type, province_city_code, parent_code, reserve_mobile
+    from tb_user_employee
+  </select>
+</mapper>

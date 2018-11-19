@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.BorrowWishMapper">
+  <resultMap id="BaseResultMap" type="entity.BorrowWish">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="wish_money" jdbcType="DECIMAL" property="wishMoney" />
+    <result column="wish_apr" jdbcType="DECIMAL" property="wishApr" />
+    <result column="wish_time" jdbcType="INTEGER" property="wishTime" />
+    <result column="wish_use" jdbcType="VARCHAR" property="wishUse" />
+    <result column="wish_repay_style" jdbcType="VARCHAR" property="wishRepayStyle" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="user_phone2" jdbcType="VARCHAR" property="userPhone2" />
+    <result column="user_Security" jdbcType="VARCHAR" property="userSecurity" />
+    <result column="user_Security2" jdbcType="VARCHAR" property="userSecurity2" />
+    <result column="user_home_address" jdbcType="VARCHAR" property="userHomeAddress" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="wish_name" jdbcType="VARCHAR" property="wishName" />
+    <result column="wish_issue" jdbcType="VARCHAR" property="wishIssue" />
+    <result column="wish_type" jdbcType="INTEGER" property="wishType" />
+    <result column="wish_raise_time" jdbcType="INTEGER" property="wishRaiseTime" />
+    <result column="founding_time" jdbcType="INTEGER" property="foundingTime" />
+    <result column="wish_already_money" jdbcType="DECIMAL" property="wishAlreadyMoney" />
+    <result column="wish_status" jdbcType="INTEGER" property="wishStatus" />
+    <result column="investment_amount" jdbcType="DECIMAL" property="investmentAmount" />
+    <result column="profit" jdbcType="DECIMAL" property="profit" />
+    <result column="raise_end_time" jdbcType="INTEGER" property="raiseEndTime" />
+    <result column="start_date" jdbcType="INTEGER" property="startDate" />
+    <result column="end_date" jdbcType="INTEGER" property="endDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_borrow_wish
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.BorrowWish">
+    insert into tb_borrow_wish (id, wish_money, wish_apr, 
+      wish_time, wish_use, wish_repay_style, 
+      user_phone, user_phone2, user_Security, 
+      user_Security2, user_home_address, user_id, 
+      username, create_time, status, 
+      realname, wish_name, wish_issue, 
+      wish_type, wish_raise_time, founding_time, 
+      wish_already_money, wish_status, investment_amount, 
+      profit, raise_end_time, start_date, 
+      end_date)
+    values (#{id,jdbcType=INTEGER}, #{wishMoney,jdbcType=DECIMAL}, #{wishApr,jdbcType=DECIMAL}, 
+      #{wishTime,jdbcType=INTEGER}, #{wishUse,jdbcType=VARCHAR}, #{wishRepayStyle,jdbcType=VARCHAR}, 
+      #{userPhone,jdbcType=VARCHAR}, #{userPhone2,jdbcType=VARCHAR}, #{userSecurity,jdbcType=VARCHAR}, 
+      #{userSecurity2,jdbcType=VARCHAR}, #{userHomeAddress,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{username,jdbcType=VARCHAR}, #{createTime,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{realname,jdbcType=VARCHAR}, #{wishName,jdbcType=VARCHAR}, #{wishIssue,jdbcType=VARCHAR}, 
+      #{wishType,jdbcType=INTEGER}, #{wishRaiseTime,jdbcType=INTEGER}, #{foundingTime,jdbcType=INTEGER}, 
+      #{wishAlreadyMoney,jdbcType=DECIMAL}, #{wishStatus,jdbcType=INTEGER}, #{investmentAmount,jdbcType=DECIMAL}, 
+      #{profit,jdbcType=DECIMAL}, #{raiseEndTime,jdbcType=INTEGER}, #{startDate,jdbcType=INTEGER}, 
+      #{endDate,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.BorrowWish">
+    update tb_borrow_wish
+    set wish_money = #{wishMoney,jdbcType=DECIMAL},
+      wish_apr = #{wishApr,jdbcType=DECIMAL},
+      wish_time = #{wishTime,jdbcType=INTEGER},
+      wish_use = #{wishUse,jdbcType=VARCHAR},
+      wish_repay_style = #{wishRepayStyle,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_phone2 = #{userPhone2,jdbcType=VARCHAR},
+      user_Security = #{userSecurity,jdbcType=VARCHAR},
+      user_Security2 = #{userSecurity2,jdbcType=VARCHAR},
+      user_home_address = #{userHomeAddress,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      realname = #{realname,jdbcType=VARCHAR},
+      wish_name = #{wishName,jdbcType=VARCHAR},
+      wish_issue = #{wishIssue,jdbcType=VARCHAR},
+      wish_type = #{wishType,jdbcType=INTEGER},
+      wish_raise_time = #{wishRaiseTime,jdbcType=INTEGER},
+      founding_time = #{foundingTime,jdbcType=INTEGER},
+      wish_already_money = #{wishAlreadyMoney,jdbcType=DECIMAL},
+      wish_status = #{wishStatus,jdbcType=INTEGER},
+      investment_amount = #{investmentAmount,jdbcType=DECIMAL},
+      profit = #{profit,jdbcType=DECIMAL},
+      raise_end_time = #{raiseEndTime,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=INTEGER},
+      end_date = #{endDate,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, wish_money, wish_apr, wish_time, wish_use, wish_repay_style, user_phone, 
+    user_phone2, user_Security, user_Security2, user_home_address, user_id, username, 
+    create_time, status, realname, wish_name, wish_issue, wish_type, wish_raise_time, 
+    founding_time, wish_already_money, wish_status, investment_amount, profit, raise_end_time, 
+    start_date, end_date
+    from tb_borrow_wish
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, wish_money, wish_apr, wish_time, wish_use, wish_repay_style, user_phone, 
+    user_phone2, user_Security, user_Security2, user_home_address, user_id, username, 
+    create_time, status, realname, wish_name, wish_issue, wish_type, wish_raise_time, 
+    founding_time, wish_already_money, wish_status, investment_amount, profit, raise_end_time, 
+    start_date, end_date
+    from tb_borrow_wish
+  </select>
+  
+  <!-- 活期累计投资总额 -->
+  <select id="getYongliAll" resultType="double">
+  	select sum(a.money_operate) 
+  	from tb_borrow_wish b ,tb_user_account_log a 
+  	where b.wish_type=2 and a.wish_id=b.id
+  </select>
+  
+  <!-- 定期累计投资总额 -->
+  <select id="getSumMoneyByProduct" resultType="double">
+  	select sum(wish_already_money) 
+  	from tb_borrow_wish
+  	where wish_status in (6,3) and wish_type=1
+  </select>
+  
+  <!-- 活期累计收益 -->
+  <select id="getYongliProfit" resultType="double">
+  	select sum(profit) 
+  	from tb_borrow_wish 
+  	where wish_name='永利宝'
+  </select>
+  
+  <!-- 定期累计收益 -->
+  <select id="getSumProductProfit" resultType="double">
+  	select sum(profit) from tb_borrow_wish where wish_status=6 and wish_type=1
+  </select>
+  
+  <!-- 永利宝当前规模 -->
+  <select id="getYonglibao" resultType="double">
+  	select sum(yonglibao) 
+  	from tb_user_account 
+  </select>
+  
+  <!-- 定期当前规模 -->
+  <select id="getWishAlreadyMoney" resultType="double">
+  	select sum(wish_already_money)
+  	 from tb_borrow_wish 
+  	 where wish_status=3 and wish_type=1
+  </select>
+  
+  <!-- 活期产品年利率 -->
+    <select id="getWishApr" resultType="double">
+    	select wish_apr from tb_borrow_wish where id=#{wishId}
+    </select>
+    <!-- 修改永利宝总收益 -->
+    <update id="updateYonglibaoProfit">
+    	update tb_borrow_wish
+    	set profit = profit + #{money},
+    	wish_already_money = wish_already_money + #{money}
+    	where id = 1
+    </update>
+
+</mapper>

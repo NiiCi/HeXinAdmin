@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserAccountLogMapper">
+  <resultMap id="BaseResultMap" type="entity.UserAccountLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="id_related" jdbcType="INTEGER" property="idRelated" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="money_operate" jdbcType="DECIMAL" property="moneyOperate" />
+    <result column="money_total" jdbcType="DECIMAL" property="moneyTotal" />
+    <result column="money_usable" jdbcType="DECIMAL" property="moneyUsable" />
+    <result column="money_tender_freeze" jdbcType="DECIMAL" property="moneyTenderFreeze" />
+    <result column="money_collection" jdbcType="DECIMAL" property="moneyCollection" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="money_withdraw" jdbcType="DECIMAL" property="moneyWithdraw" />
+    <result column="money_insure" jdbcType="DECIMAL" property="moneyInsure" />
+    <result column="created_at" jdbcType="INTEGER" property="createdAt" />
+    <result column="created_ip" jdbcType="VARCHAR" property="createdIp" />
+    <result column="wish_id" jdbcType="INTEGER" property="wishId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user_account_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.UserAccountLog">
+    insert into tb_user_account_log (id, id_related, user_id, 
+      type, money_operate, money_total, 
+      money_usable, money_tender_freeze, money_collection, 
+      remark, money_withdraw, money_insure, 
+      created_at, created_ip, wish_id, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{idRelated,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{type,jdbcType=TINYINT}, #{moneyOperate,jdbcType=DECIMAL}, #{moneyTotal,jdbcType=DECIMAL}, 
+      #{moneyUsable,jdbcType=DECIMAL}, #{moneyTenderFreeze,jdbcType=DECIMAL}, #{moneyCollection,jdbcType=DECIMAL}, 
+      #{remark,jdbcType=VARCHAR}, #{moneyWithdraw,jdbcType=DECIMAL}, #{moneyInsure,jdbcType=DECIMAL}, 
+      #{createdAt,jdbcType=INTEGER}, #{createdIp,jdbcType=VARCHAR}, #{wishId,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.UserAccountLog">
+    update tb_user_account_log
+    set id_related = #{idRelated,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      type = #{type,jdbcType=TINYINT},
+      money_operate = #{moneyOperate,jdbcType=DECIMAL},
+      money_total = #{moneyTotal,jdbcType=DECIMAL},
+      money_usable = #{moneyUsable,jdbcType=DECIMAL},
+      money_tender_freeze = #{moneyTenderFreeze,jdbcType=DECIMAL},
+      money_collection = #{moneyCollection,jdbcType=DECIMAL},
+      remark = #{remark,jdbcType=VARCHAR},
+      money_withdraw = #{moneyWithdraw,jdbcType=DECIMAL},
+      money_insure = #{moneyInsure,jdbcType=DECIMAL},
+      created_at = #{createdAt,jdbcType=INTEGER},
+      created_ip = #{createdIp,jdbcType=VARCHAR},
+      wish_id = #{wishId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, id_related, user_id, type, money_operate, money_total, money_usable, money_tender_freeze, 
+    money_collection, remark, money_withdraw, money_insure, created_at, created_ip, wish_id, 
+    status
+    from tb_user_account_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, id_related, user_id, type, money_operate, money_total, money_usable, money_tender_freeze, 
+    money_collection, remark, money_withdraw, money_insure, created_at, created_ip, wish_id, 
+    status
+    from tb_user_account_log
+  </select>
+  <!-- 有效投资人数 -->
+  <select id="getPeopleCount" resultType="int">
+ 	 select count(*) from (select * from tb_user_account_log where type=31 group by user_id) as newTable	
+  </select>
+  <!-- 活期产品资金变动用户信息 -->
+  <select id="getMoneyChangeUserInfo" resultMap="BaseResultMap">
+  	  select a.* from tb_user_account_log a ,tb_borrow_wish b 
+  	  where created_at between #{time}-86400 and #{time}
+   	  and a.wish_id=b.id and b.wish_name='永利宝' 
+   	  group by a.user_id
+  </select>
+  
+  <!-- 获取永利宝用户昨日的 申购或者赎回的操作金额 -->
+  <select id="getMoneyChange"  resultType="double">
+  	select sum(a.money_operate) from tb_user_account_log a,tb_borrow_wish b where 
+    a.wish_id =b.id and b.wish_name=#{wishName}  and a.type=#{type} and a.user_id=#{userId}
+    and a.created_at between #{time}-86400 and #{time}
+  </select>
+  
+  <!-- 查询用户余额转活期存款记录 -->
+  <select id="getUserMoneyInProductLog" resultMap="BaseResultMap">
+  	select * from tb_user_account_log
+	where status = 1 and money_operate > 0 and user_id = #{userId} and type = 31
+  </select>
+   
+  <!-- 查询用户余额转定期存款记录 -->
+  <select id="getUserMoneyOutProductLog" resultMap="BaseResultMap">
+  	select * from tb_user_account_log
+	where status = 1 and money_operate > 0 and user_id = #{userId} and type = 57
+	and wish_id = 1
+  </select>
+</mapper>

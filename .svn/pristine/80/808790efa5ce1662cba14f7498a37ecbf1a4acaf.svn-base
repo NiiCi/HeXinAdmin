@@ -1,0 +1,28 @@
+package dao;
+
+import entity.UserAccount;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
+public interface UserAccountMapper {
+    int deleteByPrimaryKey(@Param("id") Integer id, @Param("userId") Integer userId);
+
+    int insert(UserAccount record);
+
+    UserAccount selectByPrimaryKey(@Param("id") Integer id, @Param("userId") Integer userId);
+
+    List<UserAccount> selectAll();
+
+    int updateByPrimaryKey(UserAccount record);
+    
+    //通过用户Id查询用户资产信息
+    UserAccount queryUserAccountByUserId(int userId);
+    
+    //更新用户账号余额,永利宝累计收益,收益
+    int updateByYonglibao(Map<String, Object> map);
+    
+    //用户余额提现
+    int userAccountPut(@Param("userId") int userId,@Param("money") double money);
+}

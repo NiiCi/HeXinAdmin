@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.BankMapper">
+  <resultMap id="BaseResultMap" type="entity.Bank">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bank_img" jdbcType="INTEGER" property="bankImg" />
+    <result column="abbreviation" jdbcType="VARCHAR" property="abbreviation" />
+    <result column="bank_name" jdbcType="VARCHAR" property="bankName" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_at" jdbcType="INTEGER" property="createdAt" />
+    <result column="updated_at" jdbcType="INTEGER" property="updatedAt" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_bank
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.Bank">
+    insert into tb_bank (id, bank_img, abbreviation, 
+      bank_name, status, created_at, 
+      updated_at)
+    values (#{id,jdbcType=INTEGER}, #{bankImg,jdbcType=INTEGER}, #{abbreviation,jdbcType=VARCHAR}, 
+      #{bankName,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=INTEGER}, 
+      #{updatedAt,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.Bank">
+    update tb_bank
+    set bank_img = #{bankImg,jdbcType=INTEGER},
+      abbreviation = #{abbreviation,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, bank_img, abbreviation, bank_name, status, created_at, updated_at
+    from tb_bank
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, bank_img, abbreviation, bank_name, status, created_at, updated_at
+    from tb_bank
+  </select>
+</mapper>

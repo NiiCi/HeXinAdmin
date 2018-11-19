@@ -1,0 +1,104 @@
+package entity;
+
+public class UserCapitalFlow {
+    private int id;
+
+    private int userId;
+
+    private int type;
+
+    private int status;
+
+    private double money;
+
+    private double charge;
+
+    private int returnCode;
+
+    private String returnInformation;
+
+    private long createTime;
+
+    private String createIp;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
+		this.money = money;
+	}
+
+	public double getCharge() {
+		return charge;
+	}
+
+	public void setCharge(double charge) {
+		this.charge = charge;
+	}
+
+	public int getReturnCode() {
+		return returnCode;
+	}
+
+	public void setReturnCode(int returnCode) {
+		this.returnCode = returnCode;
+	}
+
+	public String getReturnInformation() {
+		return returnInformation;
+	}
+
+	public void setReturnInformation(String returnInformation) {
+		this.returnInformation = returnInformation;
+	}
+
+	public long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(long createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getCreateIp() {
+		return createIp;
+	}
+
+	public void setCreateIp(String createIp) {
+		this.createIp = createIp;
+	}
+
+}

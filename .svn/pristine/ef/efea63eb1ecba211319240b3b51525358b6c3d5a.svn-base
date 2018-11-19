@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserCapitalFlowMapper">
+	<resultMap id="BaseResultMap" type="entity.UserCapitalFlow">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="type" jdbcType="INTEGER" property="type" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="money" jdbcType="DECIMAL" property="money" />
+		<result column="charge" jdbcType="INTEGER" property="charge" />
+		<result column="return_code" jdbcType="INTEGER" property="returnCode" />
+		<result column="return_information" jdbcType="VARCHAR"
+			property="returnInformation" />
+		<result column="create_time" jdbcType="INTEGER" property="createTime" />
+		<result column="create_ip" jdbcType="VARCHAR" property="createIp" />
+	</resultMap>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from tb_user_capitalflow
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="entity.UserCapitalFlow">
+		insert into tb_user_capitalflow (id, user_id, type,
+		status, money, charge,
+		return_code, return_information, create_time,
+		create_ip)
+		values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+		#{type,jdbcType=INTEGER},
+		#{status,jdbcType=INTEGER}, #{money,jdbcType=DECIMAL}, #{charge,jdbcType=INTEGER},
+		#{returnCode,jdbcType=INTEGER}, #{returnInformation,jdbcType=VARCHAR},
+		#{createTime,jdbcType=INTEGER},
+		#{createIp,jdbcType=VARCHAR})
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="entity.UserCapitalFlow">
+		update tb_user_capitalflow
+		set user_id = #{userId,jdbcType=INTEGER},
+		type = #{type,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		money = #{money,jdbcType=DECIMAL},
+		charge = #{charge,jdbcType=INTEGER},
+		return_code = #{returnCode,jdbcType=INTEGER},
+		return_information = #{returnInformation,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=INTEGER},
+		create_ip = #{createIp,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select id, user_id, type, status, money, charge, return_code,
+		return_information,
+		create_time, create_ip
+		from tb_user_capitalflow
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectAll" resultMap="BaseResultMap">
+		select id, user_id, type, status, money, charge, return_code,
+		return_information,
+		create_time, create_ip
+		from tb_user_capitalflow
+	</select>
+	<!-- 添加资金流水记录 -->
+	<insert id="addUserCapitalFlow">
+		insert into tb_user_capitalflow
+		(user_id, type, status, money, charge, return_code, return_information,
+		create_time, create_ip)
+		values (#{userId},#{type},#{status},#{money},#{charge},#{returnCode}
+		,#{returnInformation},#{createTime},#{createIp})
+	</insert>
+</mapper>

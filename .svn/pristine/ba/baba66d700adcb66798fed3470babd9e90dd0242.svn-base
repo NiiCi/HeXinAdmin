@@ -1,0 +1,17 @@
+package service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import dao.UserLaborageMapper;
+
+@Service
+public class UserLaborageService {
+	@Autowired
+	UserLaborageMapper userLaborageMapper;
+	
+	//累计发放工资
+	public double getLabTotal(){
+		return userLaborageMapper.getLabTotal();
+	}
+}

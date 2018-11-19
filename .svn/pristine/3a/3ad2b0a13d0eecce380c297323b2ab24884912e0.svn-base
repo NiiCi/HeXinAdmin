@@ -1,0 +1,38 @@
+package service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import dao.UserAccountMapper;
+import dao.UserEmployeeMapper;
+import dao.UserMapper;
+import entity.User;
+import entity.UserAccount;
+import entity.UserEmployee;
+
+@Service
+public class UserService {
+	@Autowired
+	UserMapper udao;
+    public  List<User> selectAll(User user){
+    	return udao.selectAll(user);
+    }
+    
+    public List<User> selectAll0(){
+    	return udao.selectAll0();
+    }
+    @Autowired
+    UserEmployeeMapper udao2;
+    public  UserEmployee selectDetailById(int id){
+    	return udao2.selectDetailById(id);
+    } 
+    @Autowired
+    UserAccountMapper udao3;
+    //根据用户id查询资产
+    public  UserAccount selectUserMoney(int user_id){
+    	return udao3.selectUserMoney(user_id);
+    }
+    
+}

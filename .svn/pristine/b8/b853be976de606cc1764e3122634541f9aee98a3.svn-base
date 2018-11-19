@@ -1,0 +1,47 @@
+package service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import dao.UserAccountLogMapper;
+import entity.User;
+import entity.UserAccountLog;
+
+@Service
+public class UserAccountLogService {
+  @Autowired
+  UserAccountLogMapper userAccountLogMapper;
+  public List<UserAccountLog> selectAll(User user){
+		
+		return userAccountLogMapper.selectAll(user);
+	} 
+  
+//ЧͶ      
+  public int getPeopleCount(){
+  	return userAccountLogMapper.getPeopleCount();
+  }
+  
+  //  ȡ   ջ  ڲ Ʒ ʽ 䶯 û   Ϣ
+  public List<UserAccountLog> getMoneyChangeUserInfo(long nowTime){
+  	return userAccountLogMapper.getMoneyChangeUserInfo(nowTime);
+  }
+  
+  //  ȡ       û    յ   깺      صĲ      
+  public double getMoneyChange(Map<String, Object> map){
+  	return userAccountLogMapper.getMoneyChange(map);
+  }
+  //  ѯ û    ת  /   ڴ   ¼
+  public List<UserAccountLog> getUserMoneyInProductLog(int userId){
+  	return userAccountLogMapper.getUserMoneyInProductLog(userId);
+  }
+  //  ѯ û    ڴ  ת        ¼
+  public List<UserAccountLog> getUserMoneyOutProductLog(int userId){
+  	return userAccountLogMapper.getUserMoneyOutProductLog(userId);
+  }
+
+  
+   
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserCaptchaMapper">
+  <resultMap id="BaseResultMap" type="entity.UserCaptcha">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="captcha" jdbcType="VARCHAR" property="captcha" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="generate_time" jdbcType="INTEGER" property="generateTime" />
+    <result column="expire_time" jdbcType="INTEGER" property="expireTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user_captcha
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.UserCaptcha">
+    insert into tb_user_captcha (id, user_id, phone, 
+      captcha, type, generate_time, 
+      expire_time, status)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
+      #{captcha,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{generateTime,jdbcType=INTEGER}, 
+      #{expireTime,jdbcType=INTEGER}, #{status,jdbcType=TINYINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.UserCaptcha">
+    update tb_user_captcha
+    set user_id = #{userId,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      captcha = #{captcha,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      generate_time = #{generateTime,jdbcType=INTEGER},
+      expire_time = #{expireTime,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, phone, captcha, type, generate_time, expire_time, status
+    from tb_user_captcha
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, phone, captcha, type, generate_time, expire_time, status
+    from tb_user_captcha
+  </select>
+</mapper>

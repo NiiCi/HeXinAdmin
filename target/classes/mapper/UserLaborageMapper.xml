@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserLaborageMapper">
+  <resultMap id="BaseResultMap" type="entity.UserLaborage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="laborage" jdbcType="DECIMAL" property="laborage" />
+    <result column="date" jdbcType="VARCHAR" property="date" />
+    <result column="pay_date" jdbcType="VARCHAR" property="payDate" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_user_laborage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.UserLaborage">
+    insert into tb_user_laborage (id, user_id, laborage, 
+      date, pay_date, operator, 
+      type, status)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{laborage,jdbcType=DECIMAL}, 
+      #{date,jdbcType=VARCHAR}, #{payDate,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.UserLaborage">
+    update tb_user_laborage
+    set user_id = #{userId,jdbcType=INTEGER},
+      laborage = #{laborage,jdbcType=DECIMAL},
+      date = #{date,jdbcType=VARCHAR},
+      pay_date = #{payDate,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, laborage, date, pay_date, operator, type, status
+    from tb_user_laborage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, laborage, date, pay_date, operator, type, status
+    from tb_user_laborage
+  </select>
+  
+  <!-- 累计发放工资 -->
+  <select id="getLabTotal" resultType="double">
+  	select sum(laborage) 
+  	from tb_user_laborage 
+  	where user_id != 0
+  </select>
+</mapper>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.AdminUserMapper">
+  <resultMap id="BaseResultMap" type="entity.AdminUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="password_hash" jdbcType="VARCHAR" property="passwordHash" />
+    <result column="password_reset_token" jdbcType="VARCHAR" property="passwordResetToken" />
+    <result column="rule_id" jdbcType="INTEGER" property="ruleId" />
+    <result column="auth_key" jdbcType="VARCHAR" property="authKey" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="last_visit_time" jdbcType="INTEGER" property="lastVisitTime" />
+    <result column="created_at" jdbcType="INTEGER" property="createdAt" />
+    <result column="updated_at" jdbcType="INTEGER" property="updatedAt" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="role" jdbcType="VARCHAR" property="role" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_admin_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.AdminUser">
+    insert into tb_admin_user (id, username, email, 
+      mobile, password_hash, password_reset_token, 
+      rule_id, auth_key, status, 
+      last_visit_time, created_at, updated_at, 
+      realname, role)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{passwordHash,jdbcType=VARCHAR}, #{passwordResetToken,jdbcType=VARCHAR}, 
+      #{ruleId,jdbcType=INTEGER}, #{authKey,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{lastVisitTime,jdbcType=INTEGER}, #{createdAt,jdbcType=INTEGER}, #{updatedAt,jdbcType=INTEGER}, 
+      #{realname,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.AdminUser">
+    update tb_admin_user
+    set username = #{username,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      password_hash = #{passwordHash,jdbcType=VARCHAR},
+      password_reset_token = #{passwordResetToken,jdbcType=VARCHAR},
+      rule_id = #{ruleId,jdbcType=INTEGER},
+      auth_key = #{authKey,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      last_visit_time = #{lastVisitTime,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=INTEGER},
+      realname = #{realname,jdbcType=VARCHAR},
+      role = #{role,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, username, email, mobile, password_hash, password_reset_token, rule_id, 
+    auth_key, status, last_visit_time, created_at, updated_at, realname, role
+    from tb_admin_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, username, email, mobile, password_hash, password_reset_token, rule_id, 
+    auth_key, status, last_visit_time, created_at, updated_at, realname, role
+    from tb_admin_user
+  </select>
+  
+   <!-- 管理员登录功能   -->
+   <select id="loginCheck" resultMap="BaseResultMap">
+   	select * from tb_admin_user 
+   	where username = #{username} and password_hash = #{passwordHash}
+   </select>
+</mapper>

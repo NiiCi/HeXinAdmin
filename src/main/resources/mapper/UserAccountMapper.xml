@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.UserAccountMapper">
+  <resultMap id="BaseResultMap" type="entity.UserAccount">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="money_total" jdbcType="DECIMAL" property="moneyTotal" />
+    <result column="money_usable" jdbcType="DECIMAL" property="moneyUsable" />
+    <result column="yonglibao" jdbcType="DECIMAL" property="yonglibao" />
+    <result column="money_tender_freeze" jdbcType="DECIMAL" property="moneyTenderFreeze" />
+    <result column="money_collection" jdbcType="DECIMAL" property="moneyCollection" />
+    <result column="money_withdraw" jdbcType="DECIMAL" property="moneyWithdraw" />
+    <result column="money_insure" jdbcType="DECIMAL" property="moneyInsure" />
+    <result column="profits_total" jdbcType="DECIMAL" property="profitsTotal" />
+    <result column="created_at" jdbcType="INTEGER" property="createdAt" />
+    <result column="updated_at" jdbcType="INTEGER" property="updatedAt" />
+    <result column="bank" jdbcType="INTEGER" property="bank" />
+    <result column="bank_card" jdbcType="VARCHAR" property="bankCard" />
+    <result column="money_more_more_id" jdbcType="VARCHAR" property="moneyMoreMoreId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from tb_user_account
+    where id = #{id,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.UserAccount">
+    insert into tb_user_account (id, user_id, money_total, 
+      money_usable, yonglibao, money_tender_freeze, 
+      money_collection, money_withdraw, money_insure, 
+      profits_total, created_at, updated_at, 
+      bank, bank_card, money_more_more_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{moneyTotal,jdbcType=DECIMAL}, 
+      #{moneyUsable,jdbcType=DECIMAL}, #{yonglibao,jdbcType=DECIMAL}, #{moneyTenderFreeze,jdbcType=DECIMAL}, 
+      #{moneyCollection,jdbcType=DECIMAL}, #{moneyWithdraw,jdbcType=DECIMAL}, #{moneyInsure,jdbcType=DECIMAL}, 
+      #{profitsTotal,jdbcType=DECIMAL}, #{createdAt,jdbcType=INTEGER}, #{updatedAt,jdbcType=INTEGER}, 
+      #{bank,jdbcType=INTEGER}, #{bankCard,jdbcType=VARCHAR}, #{moneyMoreMoreId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="entity.UserAccount">
+    update tb_user_account
+    set money_total = #{moneyTotal,jdbcType=DECIMAL},
+      money_usable = #{moneyUsable,jdbcType=DECIMAL},
+      yonglibao = #{yonglibao,jdbcType=DECIMAL},
+      money_tender_freeze = #{moneyTenderFreeze,jdbcType=DECIMAL},
+      money_collection = #{moneyCollection,jdbcType=DECIMAL},
+      money_withdraw = #{moneyWithdraw,jdbcType=DECIMAL},
+      money_insure = #{moneyInsure,jdbcType=DECIMAL},
+      profits_total = #{profitsTotal,jdbcType=DECIMAL},
+      created_at = #{createdAt,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=INTEGER},
+      bank = #{bank,jdbcType=INTEGER},
+      bank_card = #{bankCard,jdbcType=VARCHAR},
+      money_more_more_id = #{moneyMoreMoreId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select id, user_id, money_total, money_usable, yonglibao, money_tender_freeze, money_collection, 
+    money_withdraw, money_insure, profits_total, created_at, updated_at, bank, bank_card, 
+    money_more_more_id
+    from tb_user_account
+    where id = #{id,jdbcType=INTEGER}
+      and user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, user_id, money_total, money_usable, yonglibao, money_tender_freeze, money_collection, 
+    money_withdraw, money_insure, profits_total, created_at, updated_at, bank, bank_card, 
+    money_more_more_id
+    from tb_user_account
+  </select>
+ 
+   <select id="selectUserMoney" resultMap="BaseResultMap">
+    select * from tb_user_account where user_id=#{0}
+  </select>
+  
+  <update id="PayMoney">
+  update tb_user_account set  money_total=money_total-#{money},
+  <if test="type==1">
+  money_usable=money_usable-#{money}
+  </if>
+  <if test="type==2">
+  yonglibao=yonglibao-#{money}
+  </if>
+   where user_id=#{id}
+  </update>
+    <!-- 提现扣除余额 -->
+  <update id="DrawMoney">
+  update tb_user_account set money_usable=money_usable-#{1},money_withdraw=money_withdraw+#{1} where user_id=#{0}
+  </update>
+  
+  
+
+  
+  <!-- 有效投资人数 -->
+  <select id="getPeopleCount">
+  	select count(*) from (select * from tb_user_account_log where type=31 group by user_id) as newTable
+  </select>
+  
+  <!-- 更新永利宝金额 -->
+	<update id="updateByYonglibao">
+		update tb_user_account
+		set updated_at = #{updateAt},
+		yonglibao = yonglibao + #{money},
+		money_total = money_total + #{money},
+		profits_total = profits_total + #{money}
+		where user_id = #{userId}
+	</update>
+	<!-- 通过用户id查询用户资产信息 -->
+	<select id="queryUserAccountByUserId" resultMap="BaseResultMap">
+		select * from tb_user_account 
+		where user_id = #{userId}
+	</select>
+	<!-- 用户余额提现 -->
+	 <update id="userAccountPut">
+	 	update tb_user_account 
+	 	set money_usable = money_usable - #{money},money_withdraw = money_withdraw + #{money}
+	 	where user_id = #{userId}
+	 </update>
+    <!-- int userAccountPut(Map<String,Object> map); -->
+
+
+</mapper>

@@ -1,0 +1,42 @@
+package service;
+
+import java.util.HashMap;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import dao.UserAccountMapper;
+import entity.UserAccount;
+
+@Service
+public class UserAccountService {
+	@Autowired
+	UserAccountMapper userAccountMapper;
+	@Autowired
+	UserAccountCostService userAccountCostService;
+	//更新永利宝金额,并更新用户永利宝临时成本表
+	public int updateByYonglibao(double money,int userId){
+		HashMap<String, Object> params = new HashMap<>();
+		params.put("money", money);
+		params.put("userId", userId);
+		params.put("updateAt", System.currentTimeMillis()/1000);
+		userAccountMapper.updateByYonglibao(params);
+		return userAccountCostService.updateUserCost(params);
+	}
+	
+	//通过用户id查询用户资产信息
+	public UserAccount queryUserAccountByUserId (int userId){
+		return userAccountMapper.queryUserAccountByUserId(userId);
+	}
+	
+	//用户余额提现
+	@Transactional(rollbackFor=Exception.class)
+	public int userAccountPut(double money , int userId){
+		double moneyUsable = userAccountMapper.queryUserAccountByUserId(userId).getMoneyUsable();
+		if (money > moneyUsable) {
+			throw new RuntimeException("余额不足");
+		}
+		return userAccountMapper.userAccountPut(userId, money);
+	}
+		
+}
